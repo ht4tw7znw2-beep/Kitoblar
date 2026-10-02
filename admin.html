@@ -87,9 +87,17 @@ tr:hover td{background:#1fb8550d}
 .pc .row{justify-content:space-between;margin:8px 0 0}.pc .row>*{flex:none}.pr{color:var(--p)}
 .plus{width:34px;height:34px;border-radius:50%;border:0;background:var(--p);color:#fff;font-size:20px;cursor:pointer}
 .ci{display:flex;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--b)}.qt{display:flex;align-items:center;gap:8px}.qt button{width:30px;height:30px;border-radius:50%;border:1px solid var(--b);background:var(--c);color:var(--t);font-size:16px;cursor:pointer}.cf{padding:16px}
+
+#chk{position:fixed;inset:0;z-index:50;background:#0009;backdrop-filter:blur(4px);overflow:auto;display:flex;flex-direction:column;align-items:center;padding:20px 14px calc(24px + env(safe-area-inset-bottom,0px))}
+.paper{background:#fff;color:#111;width:100%;max-width:330px;padding:20px 18px;border-radius:6px 6px 0 0;font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;box-shadow:0 12px 40px #0006;position:relative}
+.paper:after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:10px;background:linear-gradient(135deg,#fff 5px,transparent 0) 0 0/14px 10px,linear-gradient(-135deg,#fff 5px,transparent 0) 0 0/14px 10px}
+.ch1{text-align:center}.ch1 b{display:block;font-size:18px;letter-spacing:.04em}.ch1 small{display:block;color:#555}
+.dash{border-top:1.5px dashed #999;margin:10px 0}.mt{display:flex;justify-content:space-between;gap:10px}.it{margin-bottom:6px}.tot{font-size:16px;margin:6px 0}.ty{text-align:center;margin:8px 0 0;color:#444}
+#chk .acts{display:flex;gap:8px;margin-top:28px;width:100%;max-width:330px}#chk .acts .btn{flex:1;padding:12px 6px;font-size:13px}
+@media print{body>*:not(#chk){display:none!important}#chk{position:static;background:#fff;padding:0;display:block}#chk .acts{display:none}.paper{box-shadow:none;max-width:80mm;margin:0}.paper:after{display:none}}
 </style></head><body>
 <div id="app"><nav id="nav"></nav><main id="main"></main></div>
-<div id="lg" style="position:fixed;inset:0;z-index:30;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px"><div class="card" style="width:100%;max-width:340px"><h2>AROS BUXORO</h2><p class="k">Admin kirishi</p><input id="le" type="email" placeholder="Email"><input id="lp" type="password" placeholder="Parol" style="margin-top:8px"><p id="lm" style="color:var(--r);font-size:13px"></p><button class="btn" style="width:100%" onclick="login()">Kirish</button></div></div><div id="cn"></div><div id="modal"><div id="box"></div></div>
+<div id="lg" style="position:fixed;inset:0;z-index:30;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px"><div class="card" style="width:100%;max-width:340px"><h2>AROS BUXORO</h2><p class="k">Admin kirishi</p><input id="le" type="email" placeholder="Email" autocapitalize="off" autocorrect="off" autocomplete="username"><input id="lp" type="password" autocomplete="current-password" placeholder="Parol" style="margin-top:8px"><p id="lm" style="color:var(--r);font-size:13px"></p><button class="btn" style="width:100%" onclick="login()">Kirish</button></div></div><div id="cn"></div><div id="modal"><div id="box"></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 const SUPA_URL='https://kwpxfjpnqpyvvnnbuoau.supabase.co',SUPA_KEY='sb_publishable_WwD93uvxmsD9Mwm-7Ues4w_40ox8u-q';
@@ -151,7 +159,7 @@ function savePart(id){if(!val('model')){alert('Model kiriting');return}
 function delPart(id){if(confirm("O'chirilsinmi?")){S.parts=S.parts.filter(p=>p.id!==id);save();rer()}}
 /* SAVDO */
 function savdo(){const l=S.sales.filter(s=>mt(s.items.map(i=>i.name).join(' ')+' '+(cust(s.custId)||{}).name)).slice().reverse();
- return `<div class="row"><h2>Savdo tarixi</h2><button class="btn" style="flex:0;white-space:nowrap" onclick="saleForm()">+ Yangi savdo</button></div><div class="card sc"><table><tr><th>Sana</th><th>Mijoz</th><th>Mahsulot</th><th>Summa</th><th>Foyda</th><th>To'lov</th><th></th></tr>${l.map(s=>`<tr><td>${s.date}</td><td>${esc((cust(s.custId)||{}).name||'—')}</td><td>${s.items.map(i=>esc(i.name)+' ×'+i.qty).join('<br>')}</td><td>${fmt(total(s))}</td><td>${fmt(profit(s))}</td><td>${esc(s.pay)}${debt(s)?'<br><span class="tag no">Qarz '+fmt(debt(s))+'</span>':''}</td><td><button class="btn s" onclick="delSale('${s.id}')">🗑</button></td></tr>`).join('')||'<tr><td colspan=7 class="k">Savdo yo\'q</td></tr>'}</table></div>`}
+ return `<div class="row"><h2>Savdo tarixi</h2><button class="btn" style="flex:0;white-space:nowrap" onclick="saleForm()">+ Yangi savdo</button></div><div class="card sc"><table><tr><th>Sana</th><th>Mijoz</th><th>Mahsulot</th><th>Summa</th><th>Foyda</th><th>To'lov</th><th></th></tr>${l.map(s=>`<tr><td>${s.date}</td><td>${esc((cust(s.custId)||{}).name||'—')}</td><td>${s.items.map(i=>esc(i.name)+' ×'+i.qty).join('<br>')}</td><td>${fmt(total(s))}</td><td>${fmt(profit(s))}</td><td>${esc(s.pay)}${debt(s)?'<br><span class="tag no">Qarz '+fmt(debt(s))+'</span>':''}</td><td><button class="btn s" onclick="chekSale('${s.id}')">🧾</button> <button class="btn s" onclick="delSale('${s.id}')">🗑</button></td></tr>`).join('')||'<tr><td colspan=7 class="k">Savdo yo\'q</td></tr>'}</table></div>`}
 let lines=[];
 function saleForm(){lines=[{pid:'',qty:1,price:0}];drawSale()}
 function drawSale(){if(!S.parts.length){modal('<p>Avval omborga zapchast qo\'shing.</p><button class="btn" onclick="close_()">OK</button>');return}
@@ -168,7 +176,7 @@ function confirmSale(){keep();const ls=lines.filter(l=>l.pid&&l.qty>0);if(!ls.le
  let cid=tmp.cust;if(!cid&&tmp.newc){cid=uid();S.customers.push({id:cid,name:tmp.newc,phone:tmp.newp||'',tg:'',note:''})}
  const s={id:uid(),date:today(),custId:cid||'',pay:tmp.pay||'Naqd',discount:+tmp.disc||0,note:tmp.note||'',due:tmp.due||'',items:ls.map(l=>{const p=part(l.pid);p.qty-=l.qty;return{pid:p.id,name:p.brand+' '+p.name,qty:l.qty,price:l.price,cost:p.cost}}),payments:[]};
  const t=total(s);const pd=tmp.paid===''||tmp.paid===undefined?t:Math.min(+tmp.paid||0,t);if(pd>0)s.payments.push({date:today(),amt:pd});
- S.sales.push(s);S.log.push({t:new Date().toISOString(),a:'sotuv',id:s.id});tmp={};save();close_();tab='savdo';render()}
+ S.sales.push(s);S.log.push({t:new Date().toISOString(),a:'sotuv',id:s.id});tmp={};save();close_();tab='savdo';render();chekSale(s.id)}
 function delSale(id){if(!confirm("Savdo o'chirilsin? Ombor qaytariladi."))return;const s=S.sales.find(x=>x.id===id);s.items.forEach(i=>{const p=part(i.pid);if(p)p.qty+=i.qty});S.log.push({t:new Date().toISOString(),a:"o'chirildi",id,sum:total(s)});S.sales=S.sales.filter(x=>x.id!==id);save();rer()}
 /* MIJOZ */
 function mijoz(){const l=S.customers.filter(c=>mt(c.name+' '+c.phone+' '+c.tg));
@@ -221,7 +229,7 @@ function cartV(){const it=cart.map(c=>({c,p:part(c.pid)})).filter(x=>x.p),t=sum(
 function order(){const n=$('#oc_n').value.trim(),ph=$('#oc_p').value.trim();if(!n||!ph){alert('Ism va telefonni kiriting');return}
  S.orders.push({id:uid(),date:today(),name:n,phone:ph,items:cart.map(c=>({pid:c.pid,qty:c.qty})),st:'yangi'});save();cart=[];ct='home';renderC();alert("Buyurtma qabul qilindi! Tez orada bog'lanamiz.")}
 function buyurtma(){const l=S.orders.filter(o=>o.st==='yangi').slice().reverse();
- return `<h2>Mijoz buyurtmalari</h2><div class="card sc"><table><tr><th>Sana</th><th>Mijoz</th><th>Mahsulot</th><th>Summa</th><th></th></tr>${l.map(o=>{const it=o.items.map(i=>({i,p:part(i.pid)})).filter(x=>x.p);return`<tr><td>${o.date}</td><td>${esc(o.name)}<br><span class="k">${esc(o.phone)}</span></td><td>${it.map(x=>esc(x.p.brand+' '+x.p.name)+' ×'+x.i.qty).join('<br>')}</td><td>${fmt(sum(it,x=>x.i.qty*x.p.price))}</td><td><button class="btn" onclick="okOrder('${o.id}')">Sotuvga</button> <button class="btn s" onclick="noOrder('${o.id}')">✕</button></td></tr>`}).join('')||'<tr><td colspan=5 class="k">Yangi buyurtma yo\'q</td></tr>'}</table></div>`}
+ return `<h2>Mijoz buyurtmalari</h2><div class="card sc"><table><tr><th>Sana</th><th>Mijoz</th><th>Mahsulot</th><th>Summa</th><th></th></tr>${l.map(o=>{const it=o.items.map(i=>({i,p:part(i.pid)})).filter(x=>x.p);return`<tr><td>${o.date}</td><td>${esc(o.name)}<br><span class="k">${esc(o.phone)}</span></td><td>${it.map(x=>esc(x.p.brand+' '+x.p.name)+' ×'+x.i.qty).join('<br>')}</td><td>${fmt(sum(it,x=>x.i.qty*x.p.price))}</td><td><button class="btn" onclick="okOrder('${o.id}')">Sotuvga</button> <button class="btn s" onclick="chekOrder('${o.id}')">🧾</button> <button class="btn s" onclick="noOrder('${o.id}')">✕</button></td></tr>`}).join('')||'<tr><td colspan=5 class="k">Yangi buyurtma yo\'q</td></tr>'}</table></div>`}
 function okOrder(id){const o=S.orders.find(x=>x.id===id),its=o.items.filter(i=>part(i.pid));for(const i of its)if(part(i.pid).qty<i.qty){alert('Omborda yetarli emas: '+part(i.pid).name);return}
  let c=S.customers.find(x=>x.phone===o.phone);if(!c){c={id:uid(),name:o.name,phone:o.phone,tg:'',note:'Buyurtma orqali'};S.customers.push(c)}
  const s={id:uid(),date:today(),custId:c.id,pay:'Naqd',discount:0,note:'Mijoz buyurtmasi',due:'',items:its.map(i=>{const p=part(i.pid);p.qty-=i.qty;return{pid:p.id,name:p.brand+' '+p.name,qty:i.qty,price:p.price,cost:p.cost}}),payments:[]};
@@ -239,7 +247,7 @@ function addOrd(o){if(S.orders.some(x=>x.id===o.id))return false;S.orders.push({
 async function pull(){const {data}=await sb.from('orders').select('*').eq('st','yangi');let n=0;(data||[]).forEach(o=>{if(addOrd(o)){n++;note(o)}});if(n)beep()}
 async function login(){ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume();
  const {error}=await sb.auth.signInWithPassword({email:$('#le').value.trim(),password:$('#lp').value});
- if(error){$('#lm').textContent='Email yoki parol xato';return}start()}
+ if(error){$('#lm').textContent=(/confirm/i.test(error.message)?'Email tasdiqlanmagan (Supabase: Auto Confirm User). ':/invalid login/i.test(error.message)?'Email yoki parol xato. ':'')+'['+error.message+']';return}start()}
 async function start(){$('#lg').remove();
  const {data}=await sb.from('app_state').select('data').eq('id',1).maybeSingle();
  if(data&&data.data){S=data.data;S.orders=S.orders||[];S.log=S.log||[]}
@@ -248,5 +256,14 @@ async function start(){$('#lg').remove();
  setInterval(pull,30000)}
 function cloudSt(id,st){sb.from('orders').update({st}).eq('id',id).then(()=>{})}
 {const _ok=okOrder,_no=noOrder;okOrder=function(id){_ok(id);const o=S.orders.find(x=>x.id===id);if(o&&o.st!=='yangi')cloudSt(id,o.st)};noOrder=function(id){_no(id);cloudSt(id,'bekor')}}
+const SHOP={name:'AROS BUXORO',sub:'Telefon zapchastlari',phone:'',addr:'Buxoro'};
+function chek(d){const tot=d.items.reduce((a,i)=>a+i.qty*i.price,0)-(d.discount||0);
+ window._ck=[SHOP.name,d.title+' № '+d.no,d.date,d.name?'Mijoz: '+d.name:'',...d.items.map(i=>i.name+' — '+i.qty+' × '+fmt(i.price)),'JAMI: '+fmt(tot),d.pay?"To'lov: "+d.pay:'',d.debt?'Qarz: '+fmt(d.debt):''].filter(Boolean).join('\n');
+ let el=document.getElementById('chk');if(!el){el=document.createElement('div');el.id='chk';document.body.appendChild(el)}
+ const L=(a,b)=>`<div class="mt"><span>${a}</span><span>${b}</span></div>`;
+ el.innerHTML=`<div class="paper"><div class="ch1"><b>${esc(SHOP.name)}</b><small>${esc(SHOP.sub)}</small>${SHOP.phone?`<small>📞 ${esc(SHOP.phone)}</small>`:''}${SHOP.addr?`<small>📍 ${esc(SHOP.addr)}</small>`:''}</div><div class="dash"></div>${L(esc(d.title),'<b>№ '+esc(d.no)+'</b>')}${L('Sana',esc(d.date))}${d.name?L('Mijoz',esc(d.name)):''}${d.phone?L('Tel',esc(d.phone)):''}<div class="dash"></div>${d.items.map(i=>`<div class="it">${esc(i.name)}${L(i.qty+' × '+fmt(i.price),'<b>'+fmt(i.qty*i.price)+'</b>')}</div>`).join('')}<div class="dash"></div>${d.discount?L('Chegirma','−'+fmt(d.discount)):''}<div class="mt tot"><span>JAMI</span><b>${fmt(tot)}</b></div>${d.pay?L("To'lov",esc(d.pay)):''}${d.debt?L('Qarz','<b>'+fmt(d.debt)+'</b>'):''}<div class="dash"></div><p class="ty">${esc(d.note||'Xaridingiz uchun rahmat!')}</p></div><div class="acts"><button class="btn" onclick="window.print()">🖨 Chop etish</button><button class="btn s" onclick="shareChek()">📤 Ulashish</button><button class="btn s" onclick="document.getElementById('chk').remove()">Yopish</button></div>`}
+async function shareChek(){try{if(navigator.share)await navigator.share({text:window._ck});else{await navigator.clipboard.writeText(window._ck);alert('Chek matni nusxalandi')}}catch(e){}}
+function chekSale(id){const s=S.sales.find(x=>x.id===id);if(!s)return;const c=cust(s.custId)||{};chek({title:'Savdo cheki',no:s.id.slice(-6).toUpperCase(),date:s.date,name:c.name,phone:c.phone,items:s.items,discount:s.discount,pay:s.pay,debt:debt(s)})}
+function chekOrder(id){const o=S.orders.find(x=>x.id===id);if(!o)return;chek({title:'Buyurtma cheki',no:String(o.id).slice(0,6).toUpperCase(),date:o.date,name:o.name,phone:o.phone,items:o.items.map(i=>({name:i.name||(part(i.pid)||{}).name||'?',qty:i.qty,price:i.price||(part(i.pid)||{}).price||0}))})}
 (async()=>{const {data}=await sb.auth.getSession();if(data.session)start()})();
 </script></body></html>
