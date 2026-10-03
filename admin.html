@@ -318,7 +318,9 @@ function note(o){const d=document.createElement('div');d.innerHTML='🔔 Yangi b
 function cloudSave(){if(!ready)return;clearTimeout(tmr);tmr=setTimeout(async()=>{
  await sb.from('app_state').upsert({id:1,data:S,updated_at:new Date().toISOString()});
  await sb.from('catalog').delete().neq('id','');
- if(S.parts.length)await sb.from('catalog').insert(S.parts.map(p=>({id:p.id,brand:p.brand,model:p.model,type:p.type,quality:p.quality,name:p.name,code:p.code,price:eff(p),old:p.sale>0&&p.sale<p.price?p.price:null,img:p.img||null,qty:p.qty,min:p.min})))},800)}
+ if(S.parts.length){const rows=S.parts.map(p=>({id:p.id,brand:p.brand,model:p.model,type:p.type,quality:p.quality,name:p.name,code:p.code,price:eff(p),old:p.sale>0&&p.sale<p.price?p.price:null,img:p.img||null,qty:p.qty,min:p.min}));
+  const r1=await sb.from('catalog').insert(rows);if(r1.error){const r2=await sb.from('catalog').insert(rows.map(({img,old,...x})=>x));toast(r2.error?'Bazaga saqlanmadi: '+r2.error.message:"Rasm va aksiya bazaga saqlanmadi. migration.sql ni ishga tushiring")}}},800)}
+function toast(t){const d=document.createElement('div');d.textContent=t;d.style.cssText='position:fixed;bottom:100px;left:12px;right:12px;z-index:70;background:#ff8a80;color:#220;padding:12px 14px;border-radius:12px;font:600 13px system-ui;text-align:center';document.body.appendChild(d);setTimeout(()=>d.remove(),9000)}
 function addOrd(o){if(S.orders.some(x=>x.id===o.id))return false;S.orders.push({id:o.id,date:(o.created_at||'').slice(0,10)||today(),name:o.name,phone:o.phone,items:o.items,st:o.st,pay:o.pay||'Naqd',wallet_use:+o.wallet_use||0});save();if(tab==='buyurtma')rer();return true}
 async function pull(){const {data}=await sb.from('orders').select('*').eq('st','yangi');let n=0;(data||[]).forEach(o=>{if(addOrd(o)){n++;note(o)}});if(n)ring()}
 async function login(){ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume();
@@ -343,7 +345,7 @@ function chekSale(id){const s=S.sales.find(x=>x.id===id);if(!s)return;const c=cu
 function chekOrder(id){const o=S.orders.find(x=>x.id===id);if(!o)return;chek({title:'Buyurtma cheki',no:String(o.id).slice(0,6).toUpperCase(),date:o.date,name:o.name,phone:o.phone,items:o.items.map(i=>({name:i.name||(part(i.pid)||{}).name||'?',qty:i.qty,price:i.price||(part(i.pid)||{}).price||0}))})}
 let IMG=null;
 const eff=p=>p.sale>0&&p.sale<p.price?p.sale:p.price,ph9=t=>String(t||'').replace(/\D/g,'').slice(-9);
-function imgPick(inp){const f=inp.files[0];if(!f)return;const im=new Image();im.onload=()=>{const k=Math.min(1,420/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);IMG=c.toDataURL('image/jpeg',.72);const e=$('#imgp');e.src=IMG;e.style.display='block'};im.src=URL.createObjectURL(f)}
+function imgPick(inp){const f=inp.files[0];if(!f)return;const im=new Image();im.onload=()=>{const k=Math.min(1,420/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);IMG=c.toDataURL('image/jpeg',.72);const e=$('#imgp');e.src=IMG;e.style.display='block';e.insertAdjacentHTML('afterend','')};im.onerror=()=>alert("Bu rasm ochilmadi. Boshqa rasm tanlang.");im.src=URL.createObjectURL(f)}
 function walletSettle(o,s){const p=ph9(o.phone);if(!p)return;const t=total(s),use=Math.min(+o.wallet_use||0,t),earn=Math.round((t-use)*0.01);sb.rpc('wallet_adjust',{p_phone:p,p_name:o.name,p_delta:earn-use}).then(()=>{})}
 function lab(){document.querySelectorAll('#v table').forEach(t=>{const h=[...t.rows[0].cells].map(c=>c.textContent);[...t.rows].slice(1).forEach(r=>[...r.cells].forEach((c,i)=>{if(h[i]&&c.colSpan<2)c.dataset.l=h[i]}))})}
 {const _r=rer;rer=function(){_r.apply(this,arguments);lab();drawBN()}}
