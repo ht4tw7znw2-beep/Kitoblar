@@ -174,8 +174,9 @@ function cartV(){const it=cart.map(c=>({c,p:part(c.pid)})).filter(x=>x.p),t=sum(
 async function order(){const n=$('#oc_n').value.trim(),ph=$('#oc_p').value.trim();if(!n||!ph){alert('Ism va telefonni kiriting');return}
  const items=cart.map(c=>{const p=part(c.pid);return{pid:c.pid,name:p.brand+' '+p.model+' '+p.type,qty:c.qty,price:p.price}});
  const tot=ctot(),use=PAY==='Hamyon'?Math.min(BAL,tot):0;if(PAY==='Hamyon'&&use<=0){alert("Hamyonda mablag' yo'q");return}
- const id=crypto.randomUUID();const {error}=await sb.from('orders').insert({id,name:n,phone:ph,items,pay:use>0?'Hamyon':'Naqd',wallet_use:use});
- if(error){alert("Xatolik. Qayta urinib ko'ring.");return}
+ const id=crypto.randomUUID();let {error}=await sb.from('orders').insert({id,name:n,phone:ph,items,pay:use>0?'Hamyon':'Naqd',wallet_use:use});
+ if(error&&use===0)({error}=await sb.from('orders').insert({id,name:n,phone:ph,items}));
+ if(error){alert("Xatolik: "+error.message);return}
  cart=[];ct='home';renderC();chek({title:'Buyurtma cheki',no:id.slice(0,6).toUpperCase(),date:new Date().toLocaleString('uz'),name:n,phone:ph,items,pay:use>0?'Hamyon '+fmt(use)+(tot>use?' + naqd '+fmt(tot-use):''):'Naqd',note:"Buyurtmangiz qabul qilindi. ~"+fmt(Math.round((tot-use)*0.01))+" ball hamyonga qaytadi."});PAY='Naqd'}
 const SHOP={name:'ORTIQ OPTIM',sub:'Telefon zapchastlari',phone:'',addr:'Buxoro'};
 function chek(d){const tot=d.items.reduce((a,i)=>a+i.qty*i.price,0)-(d.discount||0);
