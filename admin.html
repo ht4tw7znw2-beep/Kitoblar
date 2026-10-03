@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="uz"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AROS — Admin</title>
+<title>Ortiq Optim — Admin</title>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f4f6fb;--c:#fff;--t:#14182b;--m:#6b7390;--b:#e3e7f1;--p:#4f46e5;--g:#16a34a;--r:#dc2626;--y:#d97706}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1020;--c:#171a30;--t:#eef0fb;--m:#97a0c4;--b:#262b4a;--p:#818cf8}}
@@ -164,7 +164,7 @@ th{color:var(--m)}tr:hover td{background:#ffffff08!important}
 main{padding-bottom:110px}}
 </style></head><body>
 <div id="app"><nav id="nav"></nav><main id="main"></main></div>
-<div id="lg" style="position:fixed;inset:0;z-index:30;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px"><div class="card" style="width:100%;max-width:340px"><h2>AROS BUXORO</h2><p class="k">Admin kirishi</p><input id="le" type="email" placeholder="Email" autocapitalize="off" autocorrect="off" autocomplete="username"><input id="lp" type="password" autocomplete="current-password" placeholder="Parol" style="margin-top:8px"><p id="lm" style="color:var(--r);font-size:13px"></p><button class="btn" style="width:100%" onclick="login()">Kirish</button></div></div><div id="cn"></div><div id="bn"></div><button class="fab" onclick="saleForm()">＋ Yangi savdo</button><div id="modal"><div id="box"></div></div>
+<div id="lg" style="position:fixed;inset:0;z-index:30;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px"><div class="card" style="width:100%;max-width:340px"><h2>ORTIQ OPTIM</h2><p class="k">Admin kirishi</p><input id="le" type="email" placeholder="Email" autocapitalize="off" autocorrect="off" autocomplete="username"><input id="lp" type="password" autocomplete="current-password" placeholder="Parol" style="margin-top:8px"><p id="lm" style="color:var(--r);font-size:13px"></p><button class="btn" style="width:100%" onclick="login()">Kirish</button></div></div><div id="cn"></div><div id="bn"></div><button class="fab" onclick="saleForm()">＋ Yangi savdo</button><div id="modal"><div id="box"></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 const SUPA_URL='https://kwpxfjpnqpyvvnnbuoau.supabase.co',SUPA_KEY='sb_publishable_WwD93uvxmsD9Mwm-7Ues4w_40ox8u-q';
@@ -197,7 +197,7 @@ const val=k=>$('#f_'+k).value.trim(),num=k=>+val(k)||0;
 const TYPES=['Displey','Batareya','Kamera','Kamera oynasi','Dinamik','Mikrofon',"Zaryad raz'yomi",'Shleyf','Orqa qopqoq','Korpus','Kamera shleyfi','Power shleyf','Volume shleyf','Tugmalar','Plataga tegishli qismlar','Boshqa'];
 function render(){
  if(mode==='c')return renderC();document.body.className='';$('#cn').innerHTML='';drawBN();
- $('#nav').innerHTML='<h1><span class="logo">A</span><span>AROS BUXORO<small>Telefon zapchastlari</small></span></h1>'+TABS.map(([k,l])=>`<button class="${k===tab?'on':''}" onclick="go('${k}')"><b>${l.split(' ')[0]}</b><span>${l.slice(l.indexOf(' ')+1)}</span></button>`).join('');
+ $('#nav').innerHTML='<h1><span class="logo">O</span><span>ORTIQ OPTIM<small>Telefon zapchastlari</small></span></h1>'+TABS.map(([k,l])=>`<button class="${k===tab?'on':''}" onclick="go('${k}')"><b>${l.split(' ')[0]}</b><span>${l.slice(l.indexOf(' ')+1)}</span></button>`).join('');
   const m=$('#main');
  m.innerHTML=`<div class="top"><input id="gs" placeholder="🔍 Qidiruv: model, zapchast, mijoz..." value="${esc(q)}" oninput="q=this.value;if(tab!=='ombor'&&tab!=='savdo'&&tab!=='mijoz')tab='ombor';rer()"></div><div id="v"></div>`;
  rer(true)}
@@ -286,7 +286,7 @@ function cgrid(){const q2=cq.toLowerCase();const l=S.parts.filter(p=>(!cat||p.ty
  return l.map(p=>`<div class="pc"><div class="pi">${p.qty>0&&p.qty<=p.min?`<span class="bd">${p.qty} dona qoldi</span>`:''}${p.qty<=0?'<span class="bd r">Tugagan</span>':''}<span>${EMO[p.type]||'🧩'}</span></div><b>${esc(p.brand+' '+p.model)}</b><div class="k">${esc(p.type)}${p.quality?' · '+esc(p.quality):''}</div><div class="row"><b class="pr">${fmt(p.price)}</b>${p.qty>0?`<button class="plus" onclick="addC('${p.id}')">+</button>`:''}</div></div>`).join('')||'<p class="k" style="padding:20px;grid-column:1/-1">Mahsulot topilmadi</p>'}
 function setCat(i){cat=i<0?'':CATS[i];renderC()}
 function renderC(){document.body.className='cm';const m=$('#main');CATS=[...new Set(S.parts.map(p=>p.type))];
- if(ct==='cart')m.innerHTML=cartV();else m.innerHTML=`<div class="ch"><div><small>Filial</small><b>AROS Buxoro ⌄</b></div><button class="btn s" style="flex:none" onclick="setMode('s')">🔧 Sotuvchi</button></div><div class="cs"><input placeholder="🔍 Model yoki zapchast qidiring" value="${esc(cq)}" oninput="cq=this.value;$('#cg').innerHTML=cgrid()"></div>`+(ct==='home'?'<div class="banner"><b>aros</b><h3>Telefon zapchastlari</h3><p>Original va sifatli ehtiyot qismlar · Buxoro</p></div>':'')+`<div class="chips"><button class="${!cat?'on':''}" onclick="setCat(-1)">Hammasi</button>${CATS.map((c,i)=>`<button class="${cat===c?'on':''}" onclick="setCat(${i})">${esc(c)}</button>`).join('')}</div><h2 style="padding:0 16px">${ct==='home'?'Mavjud mahsulotlar':'Katalog'}</h2><div class="pg" id="cg">${cgrid()}</div>`;
+ if(ct==='cart')m.innerHTML=cartV();else m.innerHTML=`<div class="ch"><div><small>Filial</small><b>Ortiq Optim ⌄</b></div><button class="btn s" style="flex:none" onclick="setMode('s')">🔧 Sotuvchi</button></div><div class="cs"><input placeholder="🔍 Model yoki zapchast qidiring" value="${esc(cq)}" oninput="cq=this.value;$('#cg').innerHTML=cgrid()"></div>`+(ct==='home'?'<div class="banner"><b>ortiq optim</b><h3>Telefon zapchastlari</h3><p>Original va sifatli ehtiyot qismlar · Buxoro</p></div>':'')+`<div class="chips"><button class="${!cat?'on':''}" onclick="setCat(-1)">Hammasi</button>${CATS.map((c,i)=>`<button class="${cat===c?'on':''}" onclick="setCat(${i})">${esc(c)}</button>`).join('')}</div><h2 style="padding:0 16px">${ct==='home'?'Mavjud mahsulotlar':'Katalog'}</h2><div class="pg" id="cg">${cgrid()}</div>`;
  drawCN()}
 function drawCN(){const n=sum(cart,c=>c.qty);$('#cn').innerHTML=[['home','🏠','Bosh sahifa'],['cat','🗂','Katalog'],['cart','🛍','Savat']].map(([k,i,l])=>`<button class="${ct===k?'on':''}" onclick="ct='${k}';renderC()"><b>${i}${k==='cart'&&n?`<i>${n}</i>`:''}</b><span>${l}</span></button>`).join('')}
 function addC(id){const c=cart.find(x=>x.pid===id),p=part(id);if(c){if(c.qty<p.qty)c.qty++}else cart.push({pid:id,qty:1});drawCN()}
@@ -304,14 +304,20 @@ function okOrder(id){const o=S.orders.find(x=>x.id===id),its=o.items.filter(i=>p
 function noOrder(id){S.orders.find(x=>x.id===id).st='bekor';save();rer()}
 
 let ctx=null,tmr=null,ready=false;
-function beep(){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume();[0,.3,.6].forEach(t=>{const o=ctx.createOscillator(),g=ctx.createGain(),n=ctx.currentTime+t;o.frequency.value=880;o.connect(g);g.connect(ctx.destination);g.gain.setValueAtTime(.35,n);g.gain.exponentialRampToValueAtTime(.001,n+.22);o.start(n);o.stop(n+.25)})}catch(e){}}
-function note(o){const d=document.createElement('div');d.textContent='🔔 Yangi buyurtma: '+o.name;d.style.cssText='position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#16a34a;color:#fff;padding:12px 18px;border-radius:14px;z-index:40;box-shadow:0 8px 24px #0004';document.body.appendChild(d);setTimeout(()=>d.remove(),6000)}
+function beep(){try{unlock();const t0=ctx.currentTime;[[880,0],[1175,.22],[880,.5],[1175,.72],[1480,1]].forEach(([f,t])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;o.connect(g);g.connect(ctx.destination);g.gain.setValueAtTime(.0001,t0+t);g.gain.exponentialRampToValueAtTime(.7,t0+t+.02);g.gain.exponentialRampToValueAtTime(.001,t0+t+.28);o.start(t0+t);o.stop(t0+t+.3)});navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}
+let ringT=null;
+function ring(){beep();if(!ringT)ringT=setInterval(beep,7000)}
+function stopRing(){clearInterval(ringT);ringT=null}
+function unlock(){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume();const b=ctx.createBuffer(1,1,22050),x=ctx.createBufferSource();x.buffer=b;x.connect(ctx.destination);x.start(0)}catch(e){}}
+['pointerdown','touchend','click'].forEach(e=>document.addEventListener(e,unlock,{passive:true}));
+setInterval(()=>{let el=document.getElementById('snd');if(ctx&&ctx.state==='running'){if(el)el.remove();return}if(!document.getElementById('lg')&&!el){el=document.createElement('button');el.id='snd';el.textContent='Ovozni yoqish uchun bosing';el.style.cssText='position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:45;background:#d9b865;color:#1a1608;border:0;border-radius:99px;padding:8px 16px;font:600 13px system-ui';el.onclick=unlock;document.body.appendChild(el)}},1500);
+function note(o){const d=document.createElement('div');d.innerHTML='🔔 Yangi buyurtma: <b>'+esc(o.name)+"</b><br><small>Ko'rish uchun bosing</small>";d.style.cssText='position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#d9b865;color:#1a1608;padding:12px 18px;border-radius:14px;z-index:60;text-align:center;box-shadow:0 8px 24px #0006;cursor:pointer';d.onclick=()=>{stopRing();d.remove();go('buyurtma')};document.body.appendChild(d)}
 function cloudSave(){if(!ready)return;clearTimeout(tmr);tmr=setTimeout(async()=>{
  await sb.from('app_state').upsert({id:1,data:S,updated_at:new Date().toISOString()});
  await sb.from('catalog').delete().neq('id','');
  if(S.parts.length)await sb.from('catalog').insert(S.parts.map(p=>({id:p.id,brand:p.brand,model:p.model,type:p.type,quality:p.quality,name:p.name,code:p.code,price:p.price,qty:p.qty,min:p.min})))},800)}
 function addOrd(o){if(S.orders.some(x=>x.id===o.id))return false;S.orders.push({id:o.id,date:(o.created_at||'').slice(0,10)||today(),name:o.name,phone:o.phone,items:o.items,st:o.st});save();if(tab==='buyurtma')rer();return true}
-async function pull(){const {data}=await sb.from('orders').select('*').eq('st','yangi');let n=0;(data||[]).forEach(o=>{if(addOrd(o)){n++;note(o)}});if(n)beep()}
+async function pull(){const {data}=await sb.from('orders').select('*').eq('st','yangi');let n=0;(data||[]).forEach(o=>{if(addOrd(o)){n++;note(o)}});if(n)ring()}
 async function login(){ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume();
  const {error}=await sb.auth.signInWithPassword({email:$('#le').value.trim(),password:$('#lp').value});
  if(error){$('#lm').textContent=(/confirm/i.test(error.message)?'Email tasdiqlanmagan (Supabase: Auto Confirm User). ':/invalid login/i.test(error.message)?'Email yoki parol xato. ':'')+'['+error.message+']';return}start()}
@@ -319,11 +325,11 @@ async function start(){$('#lg').remove();
  const {data}=await sb.from('app_state').select('data').eq('id',1).maybeSingle();
  if(data&&data.data){S=data.data;S.orders=S.orders||[];S.log=S.log||[]}
  ready=true;render();cloudSave();await pull();
- sb.channel('ord').on('postgres_changes',{event:'INSERT',schema:'public',table:'orders'},p=>{if(addOrd(p.new)){beep();note(p.new)}}).subscribe();
- setInterval(pull,30000)}
+ sb.channel('ord').on('postgres_changes',{event:'INSERT',schema:'public',table:'orders'},p=>{if(addOrd(p.new)){ring();note(p.new)}}).subscribe();
+ setInterval(pull,10000)}
 function cloudSt(id,st){sb.from('orders').update({st}).eq('id',id).then(()=>{})}
 {const _ok=okOrder,_no=noOrder;okOrder=function(id){_ok(id);const o=S.orders.find(x=>x.id===id);if(o&&o.st!=='yangi')cloudSt(id,o.st)};noOrder=function(id){_no(id);cloudSt(id,'bekor')}}
-const SHOP={name:'AROS BUXORO',sub:'Telefon zapchastlari',phone:'',addr:'Buxoro'};
+const SHOP={name:'ORTIQ OPTIM',sub:'Telefon zapchastlari',phone:'',addr:'Buxoro'};
 function chek(d){const tot=d.items.reduce((a,i)=>a+i.qty*i.price,0)-(d.discount||0);
  window._ck=[SHOP.name,d.title+' № '+d.no,d.date,d.name?'Mijoz: '+d.name:'',...d.items.map(i=>i.name+' — '+i.qty+' × '+fmt(i.price)),'JAMI: '+fmt(tot),d.pay?"To'lov: "+d.pay:'',d.debt?'Qarz: '+fmt(d.debt):''].filter(Boolean).join('\n');
  let el=document.getElementById('chk');if(!el){el=document.createElement('div');el.id='chk';document.body.appendChild(el)}
@@ -339,5 +345,6 @@ function hero(){const t=today(),y=f2(new Date(Date.now()-864e5)),a=sum(S.sales.f
 function drawBN(){const t=tab,b=(k,g,l)=>`<button class="${t===k?'on':''}" onclick="go('${k}')"><b>${g}</b>${l}</button>`;
  $('#bn').innerHTML=b('dash','◈','Bosh')+b('ombor','▣','Ombor')+`<button class="plus" onclick="saleForm()">＋</button>`+b('savdo','☰','Savdo')+`<button class="${['mijoz','qarz','xarajat','buyurtma','hisobot'].includes(t)?'on':''}" onclick="more()"><b>⋯</b>Yana</button>`}
 function more(){modal("<h2>Bo'limlar</h2>"+[['mijoz','Mijozlar'],['qarz','Qarzlar'],['buyurtma','Buyurtmalar'],['xarajat','Xarajatlar'],['hisobot','Hisobot']].map(x=>`<button class="btn s" style="width:100%;margin-bottom:8px;text-align:left" onclick="close_();go('${x[0]}')">${x[1]}</button>`).join(''))}
+{const _g=go;go=function(t){if(t==='buyurtma')stopRing();_g(t)}}
 (async()=>{const {data}=await sb.auth.getSession();if(data.session)start()})();
 </script></body></html>
