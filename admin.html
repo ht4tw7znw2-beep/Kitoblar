@@ -96,9 +96,75 @@ tr:hover td{background:#1fb8550d}
 #chk .acts{display:flex;gap:8px;margin-top:28px;width:100%;max-width:330px}#chk .acts .btn{flex:1;padding:12px 6px;font-size:13px}
 @media print{body>*:not(#chk){display:none!important}#chk{position:static;background:#fff;padding:0;display:block}#chk .acts{display:none}.paper{box-shadow:none;max-width:80mm;margin:0}.paper:after{display:none}}
 @page{size:80mm auto;margin:2mm}
+
+:root{--gold:#c9a24b}
+.logo{background:linear-gradient(135deg,#ecd27f,#b8892d)!important;color:#0b1f17!important;box-shadow:0 6px 16px #c9a24b55!important}
+.mono{display:inline-grid;place-items:center;width:44px;height:44px;border:2.5px solid #111;border-radius:10px;font:800 24px/1 system-ui,sans-serif;font-style:normal;margin-bottom:6px}
+.ch1 b{font:800 17px/1.1 system-ui,sans-serif;letter-spacing:.28em;margin-left:.28em}
+.paper .dash{border-top:1px dashed #777}.paper .tot{border-top:2px solid #111;border-bottom:2px solid #111;padding:7px 0;font-size:17px}
+.bar{height:34px;margin:12px 14px 4px;background:repeating-linear-gradient(90deg,#111 0 2px,transparent 2px 4px,#111 4px 5px,transparent 5px 8px,#111 8px 11px,transparent 11px 13px);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.paper{border-radius:10px 10px 0 0;padding:22px 18px}
+
+nav{background:linear-gradient(180deg,#0b1f17,#103524)!important;border-right:0!important}
+nav h1,nav h1 span{color:#fff}nav small{color:#9bb8a8}
+nav button{color:#b7cfc2}nav button:hover{background:#ffffff14;color:#fff}
+nav button.on{background:linear-gradient(135deg,#22c55e,#15803d);color:#fff}
+.hi{margin:0 0 12px;color:var(--m);text-transform:capitalize}
+.card{border:1px solid color-mix(in srgb,var(--b) 60%,transparent);border-radius:20px}
+.grid .kpi:first-child{grid-column:span 2;background:linear-gradient(135deg,#0b1f17,#15803d);color:#fff;border:0;box-shadow:0 14px 30px #0b1f1740}
+.grid .kpi:first-child .k{color:#cfe9da}.grid .kpi:first-child .v{font-size:27px}.grid .kpi:first-child .ic{background:#ffffff26}
+.kpi .v{font-weight:800}h2{font-weight:800;letter-spacing:-.02em}
+@media(max-width:759px){nav{background:#0b1f17f2!important;backdrop-filter:blur(10px)}nav button{color:#b7cfc2}nav button.on{color:#fff}}
+@media(max-width:759px){nav h1{display:none!important}}
+
+main{max-width:1200px}
+.fab{position:fixed;right:18px;bottom:24px;z-index:6;border:0;border-radius:99px;padding:14px 20px;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;font:700 15px system-ui;box-shadow:0 10px 26px #16a34a77;cursor:pointer}
+tr:hover td{background:#1fb8550d}.card.sc{padding:6px 10px}
+button.btn.s{padding:8px 11px}.tag{letter-spacing:.01em}
+@media(max-width:759px){
+.fab{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+main{padding:12px 14px 160px}.top{padding-top:4px}
+#v .grid{grid-template-columns:1fr 1fr!important;gap:10px}
+.kpi{padding:12px;gap:10px;flex-direction:row}.kpi .ic{width:36px;height:36px;font-size:17px;border-radius:11px}.kpi .v{font-size:15.5px;line-height:1.25}.kpi .k{font-size:11.5px}
+.grid .kpi:first-child .v{font-size:24px}
+.card.sc{background:none;border:0;box-shadow:none;padding:0;overflow:visible}
+.sc table,.sc tbody{display:block;min-width:0;width:100%}
+.sc tr:first-child{display:none}
+.sc tr{display:block;background:var(--c);border-radius:18px;padding:10px 14px;margin-bottom:10px;box-shadow:var(--sh)}
+.sc td{display:flex;justify-content:space-between;gap:12px;border:0!important;padding:5px 0;text-align:right;background:none!important}
+.sc td:before{content:attr(data-l);color:var(--m);font-size:12px;text-align:left;flex:none}
+.sc td:last-child{justify-content:flex-end;padding-top:8px}.sc td:last-child:before{display:none}
+.sc td[colspan]{display:block;text-align:center}
+.row h2{flex:1}
+}
+
+:root:root:root{--bg:#0d0e10;--c:#17181b;--t:#f3efe4;--m:#9a968b;--b:#2a2b30;--p:#d9b865;--g:#7fcf9a;--r:#ff8a80;--y:#e0b050;--sh:none;--gr:#d9b865}
+body{background:var(--bg)!important;color:var(--t)}
+nav{background:#101113!important;border-right:.5px solid var(--b)!important;box-shadow:none!important}
+nav button.on{background:#d9b865!important;color:#1a1608!important;box-shadow:none!important}
+nav button b{font-size:15px}
+button.btn{background:#d9b865!important;color:#1a1608!important;box-shadow:none!important;font-weight:600}
+button.btn.s{background:transparent!important;color:var(--t)!important;border:.5px solid #3a3b41!important}
+.card{background:var(--c);border:.5px solid var(--b)!important;box-shadow:none!important}
+.kpi .ic{background:#262218!important;color:var(--p);font-size:15px;font-weight:700}
+.grid .kpi:first-child{display:none}
+.hero{background:var(--c);border:.5px solid var(--b);border-radius:20px;padding:18px;margin-bottom:12px}
+.hero .big{font-size:36px;font-weight:700;color:var(--p);line-height:1.15;letter-spacing:-.02em}.hero .big small{font-size:14px;color:var(--m);font-weight:400}
+.dl{font-size:12.5px;margin-top:2px}.dl.up{color:var(--g)}.dl.dn{color:var(--r)}
+.bars i{background:#3a3427!important}.bars div:last-child i{background:var(--p)!important}
+.top input{background:var(--c);border:.5px solid var(--b)!important;color:var(--t)}
+th{color:var(--m)}tr:hover td{background:#ffffff08!important}
+.fab{display:none!important}
+#bn{display:none}
+@media(max-width:759px){nav{display:none!important}
+#bn{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:6;background:#101113f5;border-top:.5px solid var(--b);padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));justify-content:space-around;align-items:center}
+#bn button{background:none;border:0;color:var(--m);font:11px system-ui;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:56px;cursor:pointer}
+#bn button b{font-size:21px;font-weight:400;line-height:1.1}#bn button.on{color:var(--p)}
+#bn .plus{width:54px;height:54px;border-radius:50%;background:var(--p);color:#1a1608;margin-top:-24px;font-size:30px;justify-content:center;min-width:54px;box-shadow:0 8px 22px #d9b86555}
+main{padding-bottom:110px}}
 </style></head><body>
 <div id="app"><nav id="nav"></nav><main id="main"></main></div>
-<div id="lg" style="position:fixed;inset:0;z-index:30;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px"><div class="card" style="width:100%;max-width:340px"><h2>AROS BUXORO</h2><p class="k">Admin kirishi</p><input id="le" type="email" placeholder="Email" autocapitalize="off" autocorrect="off" autocomplete="username"><input id="lp" type="password" autocomplete="current-password" placeholder="Parol" style="margin-top:8px"><p id="lm" style="color:var(--r);font-size:13px"></p><button class="btn" style="width:100%" onclick="login()">Kirish</button></div></div><div id="cn"></div><div id="modal"><div id="box"></div></div>
+<div id="lg" style="position:fixed;inset:0;z-index:30;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px"><div class="card" style="width:100%;max-width:340px"><h2>AROS BUXORO</h2><p class="k">Admin kirishi</p><input id="le" type="email" placeholder="Email" autocapitalize="off" autocorrect="off" autocomplete="username"><input id="lp" type="password" autocomplete="current-password" placeholder="Parol" style="margin-top:8px"><p id="lm" style="color:var(--r);font-size:13px"></p><button class="btn" style="width:100%" onclick="login()">Kirish</button></div></div><div id="cn"></div><div id="bn"></div><button class="fab" onclick="saleForm()">＋ Yangi savdo</button><div id="modal"><div id="box"></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 const SUPA_URL='https://kwpxfjpnqpyvvnnbuoau.supabase.co',SUPA_KEY='sb_publishable_WwD93uvxmsD9Mwm-7Ues4w_40ox8u-q';
@@ -121,7 +187,7 @@ const mon=()=>today().slice(0,8)+'01';
 const wk=()=>f2(new Date(Date.now()-6*864e5));
 const sum=(arr,fn)=>arr.reduce((a,x)=>a+fn(x),0);
 let tab='dash',q='';
-const TABS=[['dash','📊 Bosh sahifa'],['ombor','📦 Ombor'],['savdo','🛒 Savdo'],['mijoz','👥 Mijozlar'],['qarz','💳 Qarzlar'],['xarajat','💸 Xarajatlar'],['buyurtma','🛍 Buyurtmalar'],['hisobot','📑 Hisobot']];
+const TABS=[['dash','◈ Bosh sahifa'],['ombor','▣ Ombor'],['savdo','☰ Savdo'],['mijoz','◉ Mijozlar'],['qarz','◐ Qarzlar'],['xarajat','◇ Xarajatlar'],['buyurtma','✦ Buyurtmalar'],['hisobot','▤ Hisobot']];
 function go(t){tab=t;render()}
 function modal(html){$('#box').innerHTML=html;$('#modal').classList.add('on')}
 function close_(){$('#modal').classList.remove('on')}
@@ -130,7 +196,7 @@ function field(k,l,v='',t='text',o){return `<label>${l}</label>`+(o?`<select id=
 const val=k=>$('#f_'+k).value.trim(),num=k=>+val(k)||0;
 const TYPES=['Displey','Batareya','Kamera','Kamera oynasi','Dinamik','Mikrofon',"Zaryad raz'yomi",'Shleyf','Orqa qopqoq','Korpus','Kamera shleyfi','Power shleyf','Volume shleyf','Tugmalar','Plataga tegishli qismlar','Boshqa'];
 function render(){
- if(mode==='c')return renderC();document.body.className='';$('#cn').innerHTML='';
+ if(mode==='c')return renderC();document.body.className='';$('#cn').innerHTML='';drawBN();
  $('#nav').innerHTML='<h1><span class="logo">A</span><span>AROS BUXORO<small>Telefon zapchastlari</small></span></h1>'+TABS.map(([k,l])=>`<button class="${k===tab?'on':''}" onclick="go('${k}')"><b>${l.split(' ')[0]}</b><span>${l.slice(l.indexOf(' ')+1)}</span></button>`).join('');
   const m=$('#main');
  m.innerHTML=`<div class="top"><input id="gs" placeholder="🔍 Qidiruv: model, zapchast, mijoz..." value="${esc(q)}" oninput="q=this.value;if(tab!=='ombor'&&tab!=='savdo'&&tab!=='mijoz')tab='ombor';rer()"></div><div id="v"></div>`;
@@ -143,8 +209,8 @@ function dash(){const t=today(),ts=S.sales.filter(s=>s.date===t),ws=S.sales.filt
  const days=[...Array(7)].map((_,i)=>{const d=f2(new Date(Date.now()-(6-i)*864e5));return[d.slice(5),sum(S.sales.filter(s=>s.date===d),total)]});const mx=Math.max(1,...days.map(d=>d[1]));
  const cnt={};S.sales.forEach(s=>s.items.forEach(i=>cnt[i.name]=(cnt[i.name]||0)+i.qty));const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,5);
  const mod={};S.sales.forEach(s=>s.items.forEach(i=>{const p=part(i.pid);const k=p?p.brand+' '+p.model:'?';mod[k]=(mod[k]||0)+i.qty}));const tm=Object.entries(mod).sort((a,b)=>b[1]-a[1]).slice(0,5);
- const IC=['💰','📈','💸','🧾','👥','📦','⚠️','⛔','🗓','📅','🏆'];let n=0;const K=(k,v)=>`<div class="card kpi"><span class="ic">${IC[n++%IC.length]}</span><div><div class="k">${k}</div><div class="v">${v}</div></div></div>`;
- return `<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(165px,1fr))">${K('Bugungi savdo',fmt(sum(ts,total)))}${K('Bugungi foyda',fmt(sum(ts,profit)))}${K('Bugungi xarajat',fmt(sum(ex,e=>e.amt)))}${K('Sotilgan dona',sum(ts,s=>sum(s.items,i=>i.qty)))}${K('Bugungi mijozlar',new Set(ts.map(s=>s.custId)).size)}${K('Ombordagi jami',sum(S.parts,p=>p.qty)+' dona')}${K('Kam qolgan',low.length)}${K('Tugagan',out.length)}${K('Haftalik savdo',fmt(sum(ws,total)))}${K('Oylik savdo',fmt(sum(ms,total)))}${K('Oylik foyda',fmt(sum(ms,profit)))}</div>
+ const IC=['◈','↗','↘','▣','◉','▤','!','×','◷','◫','★'];let n=0;const K=(k,v)=>`<div class="card kpi"><span class="ic">${IC[n++%IC.length]}</span><div><div class="k">${k}</div><div class="v">${v}</div></div></div>`;
+ return `<p class="hi">Xush kelibsiz · ${(d=>d.getDate()+' '+['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'][d.getMonth()]+', '+['yakshanba','dushanba','seshanba','chorshanba','payshanba','juma','shanba'][d.getDay()])(new Date())}</p>${hero()}<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(165px,1fr))">${K('Bugungi savdo',fmt(sum(ts,total)))}${K('Bugungi foyda',fmt(sum(ts,profit)))}${K('Bugungi xarajat',fmt(sum(ex,e=>e.amt)))}${K('Sotilgan dona',sum(ts,s=>sum(s.items,i=>i.qty)))}${K('Bugungi mijozlar',new Set(ts.map(s=>s.custId)).size)}${K('Ombordagi jami',sum(S.parts,p=>p.qty)+' dona')}${K('Kam qolgan',low.length)}${K('Tugagan',out.length)}${K('Haftalik savdo',fmt(sum(ws,total)))}${K('Oylik savdo',fmt(sum(ms,total)))}${K('Oylik foyda',fmt(sum(ms,profit)))}</div>
  <div class="card" style="margin-bottom:14px"><div class="k">Oxirgi 7 kun savdosi</div><div class="bars" style="margin-top:10px">${days.map(d=>`<div><em>${d[1]?Math.round(d[1]/1000)+'k':''}</em><i style="height:${d[1]/mx*100}px"></i>${d[0]}</div>`).join('')}</div></div>
  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"><div class="card"><b>Eng ko'p sotilgan zapchastlar</b>${top.map(x=>`<div class="row"><span>${esc(x[0])}</span><span style="text-align:right">${x[1]} dona</span></div>`).join('')||'<p class="k">Hali savdo yo\'q</p>'}</div>
  <div class="card"><b>Eng ko'p sotilgan modellar</b>${tm.map(x=>`<div class="row"><span>${esc(x[0])}</span><span style="text-align:right">${x[1]} dona</span></div>`).join('')||'<p class="k">Hali savdo yo\'q</p>'}</div></div>
@@ -262,9 +328,16 @@ function chek(d){const tot=d.items.reduce((a,i)=>a+i.qty*i.price,0)-(d.discount|
  window._ck=[SHOP.name,d.title+' № '+d.no,d.date,d.name?'Mijoz: '+d.name:'',...d.items.map(i=>i.name+' — '+i.qty+' × '+fmt(i.price)),'JAMI: '+fmt(tot),d.pay?"To'lov: "+d.pay:'',d.debt?'Qarz: '+fmt(d.debt):''].filter(Boolean).join('\n');
  let el=document.getElementById('chk');if(!el){el=document.createElement('div');el.id='chk';document.body.appendChild(el)}
  const L=(a,b)=>`<div class="mt"><span>${a}</span><span>${b}</span></div>`;
- el.innerHTML=`<div class="paper"><div class="ch1"><b>${esc(SHOP.name)}</b><small>${esc(SHOP.sub)}</small>${SHOP.phone?`<small>📞 ${esc(SHOP.phone)}</small>`:''}${SHOP.addr?`<small>📍 ${esc(SHOP.addr)}</small>`:''}</div><div class="dash"></div>${L(esc(d.title),'<b>№ '+esc(d.no)+'</b>')}${L('Sana',esc(d.date))}${d.name?L('Mijoz',esc(d.name)):''}${d.phone?L('Tel',esc(d.phone)):''}<div class="dash"></div>${d.items.map(i=>`<div class="it">${esc(i.name)}${L(i.qty+' × '+fmt(i.price),'<b>'+fmt(i.qty*i.price)+'</b>')}</div>`).join('')}<div class="dash"></div>${d.discount?L('Chegirma','−'+fmt(d.discount)):''}<div class="mt tot"><span>JAMI</span><b>${fmt(tot)}</b></div>${d.pay?L("To'lov",esc(d.pay)):''}${d.debt?L('Qarz','<b>'+fmt(d.debt)+'</b>'):''}<div class="dash"></div><p class="ty">${esc(d.note||'Xaridingiz uchun rahmat!')}</p></div><div class="acts"><button class="btn" onclick="window.print()">🖨 Chop etish</button><button class="btn s" onclick="shareChek()">📤 Ulashish</button><button class="btn s" onclick="document.getElementById('chk').remove()">Yopish</button></div>`}
+ el.innerHTML=`<div class="paper"><div class="ch1"><i class="mono">${esc(SHOP.name[0])}</i><b>${esc(SHOP.name)}</b><small>${esc(SHOP.sub)}</small>${SHOP.phone?`<small>📞 ${esc(SHOP.phone)}</small>`:''}${SHOP.addr?`<small>📍 ${esc(SHOP.addr)}</small>`:''}</div><div class="dash"></div>${L(esc(d.title),'<b>№ '+esc(d.no)+'</b>')}${L('Sana',esc(d.date))}${d.name?L('Mijoz',esc(d.name)):''}${d.phone?L('Tel',esc(d.phone)):''}<div class="dash"></div>${d.items.map(i=>`<div class="it">${esc(i.name)}${L(i.qty+' × '+fmt(i.price),'<b>'+fmt(i.qty*i.price)+'</b>')}</div>`).join('')}<div class="dash"></div>${d.discount?L('Chegirma','−'+fmt(d.discount)):''}<div class="mt tot"><span>JAMI</span><b>${fmt(tot)}</b></div>${d.pay?L("To'lov",esc(d.pay)):''}${d.debt?L('Qarz','<b>'+fmt(d.debt)+'</b>'):''}<div class="bar"></div><p class="ty">${esc(d.note||'Xaridingiz uchun rahmat!')}</p></div><div class="acts"><button class="btn" onclick="window.print()">🖨 Chop etish</button><button class="btn s" onclick="shareChek()">📤 Ulashish</button><button class="btn s" onclick="document.getElementById('chk').remove()">Yopish</button></div>`}
 async function shareChek(){try{if(navigator.share)await navigator.share({text:window._ck});else{await navigator.clipboard.writeText(window._ck);alert('Chek matni nusxalandi')}}catch(e){}}
 function chekSale(id){const s=S.sales.find(x=>x.id===id);if(!s)return;const c=cust(s.custId)||{};chek({title:'Savdo cheki',no:s.id.slice(-6).toUpperCase(),date:s.date,name:c.name,phone:c.phone,items:s.items,discount:s.discount,pay:s.pay,debt:debt(s)})}
 function chekOrder(id){const o=S.orders.find(x=>x.id===id);if(!o)return;chek({title:'Buyurtma cheki',no:String(o.id).slice(0,6).toUpperCase(),date:o.date,name:o.name,phone:o.phone,items:o.items.map(i=>({name:i.name||(part(i.pid)||{}).name||'?',qty:i.qty,price:i.price||(part(i.pid)||{}).price||0}))})}
+function lab(){document.querySelectorAll('#v table').forEach(t=>{const h=[...t.rows[0].cells].map(c=>c.textContent);[...t.rows].slice(1).forEach(r=>[...r.cells].forEach((c,i)=>{if(h[i]&&c.colSpan<2)c.dataset.l=h[i]}))})}
+{const _r=rer;rer=function(){_r.apply(this,arguments);lab();drawBN()}}
+function hero(){const t=today(),y=f2(new Date(Date.now()-864e5)),a=sum(S.sales.filter(s=>s.date===t),total),c=sum(S.sales.filter(s=>s.date===y),total),p=c?Math.round((a-c)/c*100):null;
+ return `<div class="hero"><div class="k">Bugungi savdo</div><div class="big">${fmt(a).replace(" so'm","")} <small>so'm</small></div><div class="dl ${p!==null&&p<0?'dn':'up'}">${p===null?"Kecha savdo bo'lmagan":(p>=0?'+':'')+p+'% kechagiga nisbatan'}</div></div>`}
+function drawBN(){const t=tab,b=(k,g,l)=>`<button class="${t===k?'on':''}" onclick="go('${k}')"><b>${g}</b>${l}</button>`;
+ $('#bn').innerHTML=b('dash','◈','Bosh')+b('ombor','▣','Ombor')+`<button class="plus" onclick="saleForm()">＋</button>`+b('savdo','☰','Savdo')+`<button class="${['mijoz','qarz','xarajat','buyurtma','hisobot'].includes(t)?'on':''}" onclick="more()"><b>⋯</b>Yana</button>`}
+function more(){modal("<h2>Bo'limlar</h2>"+[['mijoz','Mijozlar'],['qarz','Qarzlar'],['buyurtma','Buyurtmalar'],['xarajat','Xarajatlar'],['hisobot','Hisobot']].map(x=>`<button class="btn s" style="width:100%;margin-bottom:8px;text-align:left" onclick="close_();go('${x[0]}')">${x[1]}</button>`).join(''))}
 (async()=>{const {data}=await sb.auth.getSession();if(data.session)start()})();
 </script></body></html>
