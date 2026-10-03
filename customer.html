@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Buxoro Optim Zapchastlar</title><style>
+<html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Buxoro Optim Zapchastlar</title><link rel="manifest" href="manifest-customer.json"><link rel="apple-touch-icon" href="icon-shop-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Zapchastlar"><meta name="theme-color" content="#f6efe4"><style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f4f6fb;--c:#fff;--t:#14182b;--m:#6b7390;--b:#e3e7f1;--p:#4f46e5;--g:#16a34a;--r:#dc2626;--y:#d97706}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1020;--c:#171a30;--t:#eef0fb;--m:#97a0c4;--b:#262b4a;--p:#818cf8}}
 :root[data-theme="dark"]{--bg:#0e1020;--c:#171a30;--t:#eef0fb;--m:#97a0c4;--b:#262b4a;--p:#818cf8}
@@ -144,6 +144,7 @@ button.btn{background:var(--p)!important;box-shadow:none!important}button.btn.s{
 .cm #cn{background:#fffaf2f0;border-color:#e2d3b8}
 .pi img{width:100%;height:100%;object-fit:cover;border-radius:14px}.bd.d{left:auto;right:6px;background:var(--r)}.old{display:block;font-size:11px;color:var(--m);font-weight:400}
 .paysel{display:flex;gap:8px;margin:10px 0 4px}.paysel button{flex:1;padding:11px;border-radius:12px;border:.5px solid var(--b);background:#fffaf2;color:var(--t);font:inherit;cursor:pointer}.paysel button.on{background:var(--p);color:#fff;border-color:var(--p)}
+.wcard{margin:0 16px 14px;background:#fffaf2;border:.5px solid #e2d3b8;border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:8px}.wcard small{color:var(--m)}.wcard b{display:block;font-size:22px;font-family:Georgia,serif;font-weight:400;color:var(--p)}.wi{display:flex;gap:8px}.wi input{flex:1;padding:10px 12px;border-radius:12px;border:.5px solid #cdb99a;background:#fff;color:var(--t);font:inherit}.wi button{border:0;border-radius:12px;background:#2b2118;color:#f6efe4;padding:0 16px;font:inherit}
 </style></head>
 <body class="cm"><div id="app"><nav id="nav"></nav><main id="main"></main></div><div id="cn"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -190,6 +191,7 @@ let NM='',PH='',PAY='Naqd',BAL=0;try{PH=localStorage.getItem('oo_ph')||''}catch(
 const ph9=t=>String(t||'').replace(/\D/g,'').slice(-9),ctot=()=>sum(cart,c=>c.qty*((part(c.pid)||{}).price||0));
 function wlText(t){const u=Math.min(BAL,t);return PAY==='Hamyon'?(BAL>0?'Hamyondan '+fmt(u)+' yechiladi'+(t>u?', qolgani '+fmt(t-u)+' naqd':''):"Hamyonda mablag' yo'q"):'Har buyurtmadan 1% ball hamyonga qaytadi. Hamyon: '+fmt(BAL)}
 function setPay(x){PAY=x;renderC()}
+function wShow(silent){const p=ph9(PH);if(p.length<9){if(!silent)alert('Telefon raqamingizni kiriting');return}try{localStorage.setItem('oo_ph',PH)}catch(e){}sb.rpc('get_balance',{p_phone:p}).then(r=>{BAL=+r.data||0;const e=$('#wb');if(e)e.textContent=fmt(BAL)})}
 function walletLook(){const p=ph9(PH);if(p.length<9)return;try{localStorage.setItem('oo_ph',PH)}catch(e){}sb.rpc('get_balance',{p_phone:p}).then(r=>{BAL=+r.data||0;const e=$('#wl');if(e)e.textContent=wlText(ctot())})}
 let vw='home',sb_='',sm_='',NAMES=[],MS=[],POP=[];
 function brands(){const m={};S.parts.forEach(p=>{const b=p.brand||'Boshqa';(m[b]=m[b]||{n:0,models:{}}).n++;m[b].models[p.model]=(m[b].models[p.model]||0)+1});return m}
@@ -203,13 +205,14 @@ function flow(){cat='';if(cq)return `<div class="pg" id="cg">${cgrid()}</div>`;
  if(vw==='brand'&&B[sb_]){MS=Object.entries(B[sb_].models);return `<button class="back" onclick="vw='home';renderC()">‹ Orqaga</button><h2 class="ti2">${esc(sb_)}</h2>`+MS.map(([k,n],i)=>`<button class="mrow" onclick="pickM(${i})"><span>${esc(k)}</span><small>${n} ta zapchast ›</small></button>`).join('')}
  if(vw==='model')return `<button class="back" onclick="vw='brand';renderC()">‹ ${esc(sb_)}</button><h2 class="ti2">${esc(sm_)}</h2><div class="pg" id="cg">${cardsOf(S.parts.filter(p=>p.model===sm_))}</div>`;
  POP=[];S.parts.forEach(p=>{if(!POP.some(x=>x[1]===p.model))POP.push([p.brand,p.model])});POP=POP.slice(0,8);
- return `<div class="hero2"><div class="sf">Buxoro Optim Zapchastlar</div><p>Sifatli zapchast, halol narx</p></div><h1 class="q">Telefoningiz qaysi?</h1><div class="bg2">${NAMES.map((b,i)=>`<button class="bt${i===0?' f':''}" onclick="pickB(${i})"><i>▣</i><b>${esc(b)}</b><small>${B[b].n} ta zapchast</small></button>`).join('')}</div><div class="h3">Mashhur zapchastlar</div><div class="pg">${cardsOf(S.parts.filter(p=>p.qty>0).slice(0,4))}</div>`}
+ return `<div class="wcard"><div><small>Hamyonim (ball)</small><b id="wb">—</b></div><div class="wi"><input id="wph" type="tel" placeholder="Telefon raqamingiz" value="${esc(PH)}" oninput="PH=this.value"><button onclick="wShow()">Ko'rish</button></div></div><div class="hero2"><div class="sf">Buxoro Optim Zapchastlar</div><p>Sifatli zapchast, halol narx</p></div><h1 class="q">Telefoningiz qaysi?</h1><div class="bg2">${NAMES.map((b,i)=>`<button class="bt${i===0?' f':''}" onclick="pickB(${i})"><i>▣</i><b>${esc(b)}</b><small>${B[b].n} ta zapchast</small></button>`).join('')}</div><div class="h3">Mashhur zapchastlar</div><div class="pg">${cardsOf(S.parts.filter(p=>p.qty>0).slice(0,4))}</div>`}
 renderC=function(){document.body.className='cm';const m=$('#main');CATS=[...new Set(S.parts.map(p=>p.type))];
  const sbar=h=>`<div class="cs"><input placeholder="Model yoki zapchast qidiring" value="${esc(cq)}" oninput="cq=this.value;${h}"></div>`;
  if(ct==='cart')m.innerHTML=cartV();
  else if(ct==='cat')m.innerHTML=sbar("$('#cg').innerHTML=cgrid()")+`<div class="chips"><button class="${!cat?'on':''}" onclick="setCat(-1)">Hammasi</button>${CATS.map((c,i)=>`<button class="${cat===c?'on':''}" onclick="setCat(${i})">${esc(c)}</button>`).join('')}</div><div class="pg" id="cg">${cgrid()}</div>`;
- else m.innerHTML=sbar("$('#bd').innerHTML=flow()")+'<div id="bd">'+flow()+'</div>';
+ else{m.innerHTML=sbar("$('#bd').innerHTML=flow()")+'<div id="bd">'+flow()+'</div>';wShow(true)}
  drawCN()}
-async function load(){const {data}=await sb.from('catalog').select('*').order('brand');S.parts=data||[];renderC()}
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+async function load(){const r=await sb.from('catalog').select('*').order('brand');let d=r.data;try{if(d&&!r.error)localStorage.setItem('oo_cat',JSON.stringify(d));else d=JSON.parse(localStorage.getItem('oo_cat')||'[]')}catch(e){d=d||[]}S.parts=d||[];renderC()}
 load();setInterval(()=>{const a=document.activeElement;if(!a||a.tagName!=='INPUT')load()},60000);
 </script></body></html>
