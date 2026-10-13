@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="uz"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SQL nusxalash</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;margin:0;padding:18px;background:#f6f7f6;color:#14171f}h1{font-size:20px;margin:0 0 4px}p{color:#555;margin:4px 0 14px}
+.b{display:block;width:100%;padding:16px;border:0;border-radius:14px;font:600 17px system-ui;margin-bottom:10px;text-align:center;text-decoration:none;box-sizing:border-box;cursor:pointer}
+.g{background:#16a34a;color:#fff}.d{background:#14171f;color:#fff}textarea{width:100%;height:260px;box-sizing:border-box;font:12px ui-monospace,monospace;padding:10px;border-radius:12px;border:1px solid #ccc}
+#ok{color:#16a34a;font-weight:600;min-height:24px}</style></head><body>
+<h1>Hamyon uchun SQL</h1><p>1) Nusxalash tugmasini bosing. 2) Supabase tugmasini bosing. 3) Maydonga bosib turib Paste qiling. 4) Run bosing.</p>
+<button class="b g" onclick="cp()">1. SQL ni nusxalash</button><div id="ok"></div>
+<button class="b" style="background:#e5e7eb;color:#14171f" onclick="sh()">Ulashish (Copy yoki Notes'ga saqlash)</button>
+<a class="b d" href="https://supabase.com/dashboard/project/kwpxfjpnqpyvvnnbuoau/sql/new?content=alter%20table%20catalog%20add%20column%20if%20not%20exists%20img%20text%2C%20add%20column%20if%20not%20exists%20old%20numeric%3B%0Aalter%20table%20orders%20add%20column%20if%20not%20exists%20pay%20text%20default%20%27Naqd%27%2C%20add%20column%20if%20not%20exists%20wallet_use%20numeric%20default%200%3B%0Acreate%20table%20if%20not%20exists%20wallets%28phone%20text%20primary%20key%2C%20name%20text%2C%20balance%20numeric%20not%20null%20default%200%2C%20updated_at%20timestamptz%20default%20now%28%29%29%3B%0Aalter%20table%20wallets%20enable%20row%20level%20security%3B%0Adrop%20policy%20if%20exists%20%22wallet%20admin%22%20on%20wallets%3B%0Acreate%20policy%20%22wallet%20admin%22%20on%20wallets%20for%20all%20to%20authenticated%20using%28true%29%20with%20check%28true%29%3B%0Acreate%20or%20replace%20function%20get_balance%28p_phone%20text%29%20returns%20numeric%20language%20sql%20security%20definer%20as%20%24%24%20select%20coalesce%28%28select%20balance%20from%20wallets%20where%20phone%3Dp_phone%29%2C0%29%20%24%24%3B%0Agrant%20execute%20on%20function%20get_balance%28text%29%20to%20anon%2C%20authenticated%3B%0Acreate%20or%20replace%20function%20wallet_adjust%28p_phone%20text%2Cp_name%20text%2Cp_delta%20numeric%29%20returns%20numeric%20language%20plpgsql%20security%20definer%20as%20%24%24%0Adeclare%20b%20numeric%3B%0Abegin%0A%20%20insert%20into%20wallets%28phone%2Cname%2Cbalance%29%20values%28p_phone%2Cp_name%2Cgreatest%28p_delta%2C0%29%29%0A%20%20on%20conflict%28phone%29%20do%20update%20set%20balance%3Dgreatest%28wallets.balance%2Bp_delta%2C0%29%2Cname%3Dexcluded.name%2Cupdated_at%3Dnow%28%29%0A%20%20returning%20balance%20into%20b%3B%0A%20%20return%20b%3B%0Aend%20%24%24%3B%0Arevoke%20execute%20on%20function%20wallet_adjust%28text%2Ctext%2Cnumeric%29%20from%20public%2C%20anon%3B%0Agrant%20execute%20on%20function%20wallet_adjust%28text%2Ctext%2Cnumeric%29%20to%20authenticated%3B%0Anotify%20pgrst%2C%20%27reload%20schema%27%3B%0A" target="_blank">2. Supabase ni ochish (SQL tayyor holda chiqadi)</a>
+<textarea id="t">alter table catalog add column if not exists img text, add column if not exists old numeric;
+alter table orders add column if not exists pay text default 'Naqd', add column if not exists wallet_use numeric default 0;
+create table if not exists wallets(phone text primary key, name text, balance numeric not null default 0, updated_at timestamptz default now());
+alter table wallets enable row level security;
+drop policy if exists "wallet admin" on wallets;
+create policy "wallet admin" on wallets for all to authenticated using(true) with check(true);
+create or replace function get_balance(p_phone text) returns numeric language sql security definer as $$ select coalesce((select balance from wallets where phone=p_phone),0) $$;
+grant execute on function get_balance(text) to anon, authenticated;
+create or replace function wallet_adjust(p_phone text,p_name text,p_delta numeric) returns numeric language plpgsql security definer as $$
+declare b numeric;
+begin
+  insert into wallets(phone,name,balance) values(p_phone,p_name,greatest(p_delta,0))
+  on conflict(phone) do update set balance=greatest(wallets.balance+p_delta,0),name=excluded.name,updated_at=now()
+  returning balance into b;
+  return b;
+end $$;
+revoke execute on function wallet_adjust(text,text,numeric) from public, anon;
+grant execute on function wallet_adjust(text,text,numeric) to authenticated;
+notify pgrst, 'reload schema';
+</textarea>
+<script>
+var T=document.getElementById('t'),O=document.getElementById('ok');
+function say(m){O.textContent=m}
+function legacy(){try{T.focus();T.select();T.setSelectionRange(0,T.value.length);return document.execCommand('copy')}catch(e){return false}}
+function cp(){var v=T.value;
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(function(){say('Nusxalandi ('+v.length+' belgi). Endi Supabase tugmasini bosing.')}).catch(function(){say(legacy()?'Nusxalandi.':"Nusxalanmadi. Pastdagi 'Ulashish' tugmasini bosing.")})}
+ else say(legacy()?'Nusxalandi.':"Nusxalanmadi. Pastdagi 'Ulashish' tugmasini bosing.")}
+function sh(){if(navigator.share){navigator.share({title:'SQL',text:T.value}).catch(function(){})}else say("Bu telefonda Ulashish yo'q. Matnga bosib turib hammasini belgilang.")}
+</script></body></html>

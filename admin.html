@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uz"><head><meta charset="utf-8">
+<html lang="uz"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ortiq Optim — Admin</title><link rel="manifest" href="manifest-admin.json"><link rel="apple-touch-icon" href="icon-admin-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Admin"><meta name="theme-color" content="#101113">
 <style>
@@ -340,7 +340,7 @@ async function start(){$('#lg').remove();
  setInterval(pull,10000)}
 function cloudSt(id,st){sb.from('orders').update({st}).eq('id',id).then(()=>{})}
 {const _ok=okOrder,_no=noOrder;okOrder=function(id){_ok(id);const o=S.orders.find(x=>x.id===id);if(o&&o.st!=='yangi')cloudSt(id,o.st)};noOrder=function(id){_no(id);cloudSt(id,'bekor')}}
-const SHOP={name:'ORTIQ OPTIM',sub:'Telefon zapchastlari',phone:'',addr:'Buxoro'};
+const SHOP={name:'ORTIQ OPTIM',sub:'Telefon zapchastlari',phone:'+998 95 265 20 83',addr:'Buxoro'};
 function chek(d){const tot=d.items.reduce((a,i)=>a+i.qty*i.price,0)-(d.discount||0);
  window._ck=[SHOP.name,d.title+' № '+d.no,d.date,d.name?'Mijoz: '+d.name:'',...d.items.map(i=>i.name+' — '+i.qty+' × '+fmt(i.price)),'JAMI: '+fmt(tot),d.pay?"To'lov: "+d.pay:'',d.debt?'Qarz: '+fmt(d.debt):''].filter(Boolean).join('\n');
  let el=document.getElementById('chk');if(!el){el=document.createElement('div');el.id='chk';document.body.appendChild(el)}
